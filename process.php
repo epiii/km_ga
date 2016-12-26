@@ -112,12 +112,14 @@ if (!isset($_POST['mode'])) { // invalid request
 		$distMin =getMinDistance($dist); 	// selected cluster : 150 rows : (index,value)
 
 		// 4.1 SSE
-		$sse = getSSE($dt,$centDec);
+		$selCent =getSelectedCent($distMin, $centDec);
+		$sse     =getSSE($dt,$selCent); // dataArray, centroidDecimal, 
 
 		// 4.2 MSE
-		// $mse = getMSE();
+		$mse 	=getMSE($sse);
 
 		// 5. fitness
+		$fitness=getFitness($mse);
 
 		// 6. operator GA 
 			// selection
@@ -132,7 +134,9 @@ if (!isset($_POST['mode'])) { // invalid request
 			'data'    =>$dt,
 			'dist'    =>$dist,
 			'distMin' =>$distMin,
-			'sse'     =>$sse
+			'sse'     =>$sse,
+			'mse'     =>$mse,
+			'fitness' =>$fitness,
 		);
 	}echo json_encode($out);
 }

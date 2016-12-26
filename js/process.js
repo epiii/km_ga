@@ -59,7 +59,7 @@ function runGA() {
           +'<table class="table table-bordered">'
           +'<tr class="text-center" style="background-color:black;color:white;">'
             +'<td>Data</td>'
-            +'<td>Cluster</td>'
+            +'<td>Selected Cluster</td>'
         +'</tr>';
 
         var nox=1;
@@ -94,7 +94,11 @@ function runGA() {
             nox++;
         });
         tb+='</table>'
-        +'</div>';
+        +'</div>'
+        
+        +'<h3>MSE : '+dt.data.mse+'</h3>'
+        +'<h3>Fitness : '+dt.data.fitness+'</h3>'
+        ;
         // -------
         $('#kmgaDV').html(tb);
       },300);

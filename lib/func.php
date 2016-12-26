@@ -107,11 +107,11 @@ function getDistance($dtArr,$centArr){
 	}return $distArr;
 }
 
-function getMinDistance($dtArr) {
+function getMinDistance($dtArr) { // output 150 rows
 	$minArr=array();
-	$minD=0;
 	foreach ($dtArr as $i => $v) {
-		$minArr[$i]['index']=array_keys($v,min($v));
+		// $minArr[$i]['index']=array_keys($v,min($v));
+		$minArr[$i]['index']=array_search(min($v),$v);
 		$minArr[$i]['value']=min($v);
 	}return $minArr;
 }
@@ -166,10 +166,13 @@ function getMSE2($data,$attrNum,$centroid){
 }
 
 $sseArr=array();
-function getSSE($dtArr,$centArr){
+// function getSSE($dtArr,$distMinArr,$centDecArr){ // output : 150 rows
+function getSSE($dtArr,$selCent){ // output : 150 rows
 	foreach ($dtArr as $i => $v) { // data : row (1-150)
 		foreach ($v as $ii => $vv) { // data : col (1-4) : sl, sw, pl, pw
-			foreach ($centArr as $k => $val) {// centroid : row (1-3) 
+			// pr($selCent);
+			// foreach ($distMinArr as $k => $val) {// centroid : row (1-3) 
+			foreach ($selCent as $k => $val) {// centroid : row (1-3) 
 				$distx=0;
 				foreach ($val as $kk => $vval) { // centroid : col (1-4) 
 					$distx+=pow(($vv-$vval),2); 
@@ -177,4 +180,27 @@ function getSSE($dtArr,$centArr){
 			}
 		}$sseArr[$i]=$distx;
 	}return $sseArr;
+}
+
+
+function getSelectedCent($distMin, $centDec){
+	$centArr=array();
+	// pr($distMin);
+	foreach ($distMin as $i => $v) {
+		foreach ($centDec as $ii => $vv) {
+			if($ii==$v['index'])
+				$centArr[]=$vv;
+		}
+	}return $centArr;
+}
+
+function getMSE($sse){
+	$sseTot=0;
+	foreach ($sse as $i => $v) {
+		$sseTot+=$v;
+	}return dec($sseTot/count($sse));
+}
+
+function getFitness($mse){
+	return dec(1/$mse);
 }
