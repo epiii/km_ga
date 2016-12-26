@@ -205,7 +205,7 @@ function getCrossOver($maxBit,$ind1,$ind2){
 	$newInd1 = array();
 	$newInd2 = array();
 	foreach ($ind1 as $i => $v) { // ind1 : row : 3 
-		$cut = rand(1,($maxBit-1));
+		$cut = rand(1,($maxBit));
 		foreach ($v as $ii => $vv) { // ind1 : col : 4 string 
 			// parent 1
 											// src     "1011|001" 

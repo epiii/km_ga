@@ -133,7 +133,9 @@ if (!isset($_POST['mode'])) { // invalid request
 			}
 */
 			// 6.3 crossover
-			$maxBit  =7;
+			$maxBit  =5; 	// 1100111 	=> 7 bit
+							// 0123456  => 6 index	
+							// 012345|6 => 5th is MAXimum (cut-point index) 
 			$parent1 =$centBin;
 			$parent2 =$individuArr[0];
 			// process xOver
