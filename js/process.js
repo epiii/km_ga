@@ -95,18 +95,28 @@ function runGA() {
         });
         tb+='</table>'
         +'</div>';
-        
-        tb+='<h3 class="text-left">- Initial Chromosome :</h3>';
-        $.each(dt.data.centBin, function (id,item) {
-          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
-        });
+
+        // MSE - Fitness  ------------
         tb+='<h3 class="text-left">- MSE : '+dt.data.mse+'</h3>'
         +'<h3 class="text-left">- Fitness : '+dt.data.fitness+'</h3>';
         
-        $.each(dt.data.individuArr, function(id, item){
+        // parent 1 & 2  ------------
+        tb+='<h3 class="text-left">- Parent 1 :</h3>';
+        $.each(dt.data.centBin, function (id,item) {
+          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+        });
+        tb+='<h3 class="text-left">- Parent 2:</h3>';
+        $.each(dt.data.centBin, function (id,item) {
+          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+        });
 
+        // hasil crossover (Par1 & Par2) ---------        
+        tb+='<h3 class="text-left">- New Individu (crossover) :</h3>';
+        $.each(dt.data.newIndividu, function (id,item) {
+          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
         // -------
+
         $('#kmgaDV').html(tb);
       },300);
     },
