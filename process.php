@@ -136,11 +136,16 @@ if (!isset($_POST['mode'])) { // invalid request
 			$maxBit  =7;
 			$parent1 =$centBin;
 			$parent2 =$individuArr[0];
-			
+			// process xOver
 			$newIndividu =getCrossOver($maxBit,$parent1,$parent2);
-			$child1 = $newIndividu[0];
-			$child2 = $newIndividu[1];
-			// pr($newIndividu);
+				// hasil binary mode
+				$binChild1 = $newIndividu[0];
+				$binChild2 = $newIndividu[1];
+				// hasil decimal mode
+				$decChild1	= getBin2Dec($binChild1);
+				$decChild2	= getBin2Dec($binChild2);
+
+			// pr($decChild1);
 			// 6.4 mutation
 
 		$out['success']=true;
@@ -160,8 +165,10 @@ if (!isset($_POST['mode'])) { // invalid request
 			'parent1' =>$parent1,
 			'parent2' =>$parent2,
 			// xOver : child
-			'child1'  =>$child1,
-			'child2'  =>$child2,
+			'binChild1'  =>$binChild1,
+			'binChild2'  =>$binChild2,
+			'decChild1'  =>$decChild1,
+			'decChild2'  =>$decChild2,
 		);
 	}echo json_encode($out);
 }

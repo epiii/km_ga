@@ -221,9 +221,10 @@ function getCrossOver($maxBit,$ind1,$ind2){
 			// new individu 2
 			$newStr2= $str11.$str2;
 			
-			// save 2 individu 
-			$newInd1[$i][$ii]=$newStr1;
-			$newInd2[$i][$ii]=$newStr2;
+			// save 2 individu 	
+
+			$newInd1[$i][$ii]=$newStr1;	// c1: "1011|110" 
+			$newInd2[$i][$ii]=$newStr2; // c2: "1000|001"
 		}
 	}return array($newInd1,$newInd2);
 }
@@ -242,3 +243,13 @@ function getNewPopulation($popNum,$clustNum,$attrNum,$attrRange){
 		$individuArr[$i] =$individuBin;
 	} return $individuArr;
 } 
+
+function getBin2Dec($centArr){
+	$ret=array();
+	foreach ($centArr as $i => $v) {
+		foreach ($v as $ii => $vv) {
+			$ret[$i][$ii]=bindec($vv)/10;
+		}
+	}return $ret;
+}
+
