@@ -102,11 +102,11 @@ function runGA() {
         
         // parent 1 & 2  ------------
         tb+='<h3 class="text-left">- Parent 1 :</h3>';
-        $.each(dt.data.centBin, function (id,item) {
+        $.each(dt.data.individu1, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
         tb+='<h3 class="text-left">- Parent 2:</h3>';
-        $.each(dt.data.centBin, function (id,item) {
+        $.each(dt.data.individu2, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
 

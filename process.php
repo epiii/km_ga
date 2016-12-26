@@ -134,10 +134,10 @@ if (!isset($_POST['mode'])) { // invalid request
 */
 			// 6.3 crossover
 			$maxBit      =7;
-			$ind1        =$centBin;
-			$ind2        =$individuArr[0];
-			$newIndividu =getCrossOver($maxBit,$ind1,$ind2);
-			
+			$individu1   =$centBin;
+			$individu2   =$individuArr[0];
+			$newIndividu =getCrossOver($maxBit,$individu1,$individu2);
+			pr($newIndividu);
 			// 6.4 mutation
 
 		$out['success']=true;
@@ -154,7 +154,8 @@ if (!isset($_POST['mode'])) { // invalid request
 			'mse'         =>$mse,
 			'fitness'     =>$fitness,
 			// xOver
-			'individuArr' =>$individuArr,
+			'individu1'   =>$individu1,
+			'individu2'   =>$individu2,
 			'newIndividu' =>$newIndividu,
 		);
 	}echo json_encode($out);
