@@ -202,6 +202,7 @@ function getFitness($mse){
 }
 
 function getCrossOver($maxBit,$ind1,$ind2){
+	$ret = array();
 	foreach ($ind1 as $i => $v) { // ind1 : row
 		$cut = rand(1,($maxBit-1));
 		foreach ($v as $ii => $vv) { // ind1 : col
@@ -218,7 +219,6 @@ function getCrossOver($maxBit,$ind1,$ind2){
 			$newInd[$i][$ii]=$newStr1;
 		}
 	}
-	pr($ret);
 	return $ret;
 }
 
