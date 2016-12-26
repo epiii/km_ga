@@ -96,12 +96,16 @@ function runGA() {
         tb+='</table>'
         +'</div>';
         
+        tb+='<h3 class="text-left">- Initial Chromosome :</h3>';
         $.each(dt.data.centBin, function (id,item) {
-          tb+='<h3>Initial Chromosome : '+item+'</h3>';
+          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
-        tb+='<h3>MSE : '+dt.data.mse+'</h3>'
-        +'<h3>Fitness : '+dt.data.fitness+'</h3>'
-        ;
+        tb+='<h3 class="text-left">- MSE : '+dt.data.mse+'</h3>'
+        +'<h3 class="text-left">- Fitness : '+dt.data.fitness+'</h3>';
+        
+        $.each(dt.data.individuArr, function(id, item){
+
+        });
         // -------
         $('#kmgaDV').html(tb);
       },300);

@@ -4,10 +4,10 @@ require_once "lib/kmeans/Space.php";
 require_once "lib/kmeans/Point.php";
 require_once "lib/kmeans/Cluster.php";
 // ----
-require_once 'lib/ga/individual.php';  //supporting individual 
-require_once 'lib/ga/population.php';  //supporting population 
-require_once 'lib/ga/fitnesscalc.php';  //supporting fitnesscalc 
-require_once 'lib/ga/algorithm.php';  //supporting fitnesscalc 
+// require_once 'lib/ga/individual.php';  //supporting individual 
+// require_once 'lib/ga/population.php';  //supporting population 
+// require_once 'lib/ga/fitnesscalc.php';  //supporting fitnesscalc 
+// require_once 'lib/ga/algorithm.php';  //supporting fitnesscalc 
 // --
 $dataSrc="data/iris.csv";
 
@@ -93,7 +93,8 @@ if (!isset($_POST['mode'])) { // invalid request
 		$out['data']=$tb;
 	}else{ // ga
 		$no=0;
-		$popNum=50;
+		$popNum=10;
+		$maxFitness=0.1;
 		// ---
 		$popArr=array();
 		$centArr=array();
@@ -113,7 +114,7 @@ if (!isset($_POST['mode'])) { // invalid request
 		
 		// 4.1 SSE
 		$selCent =getSelectedCent($distMin, $centDec);
-		$sse     =getSSE($dt,$selCent); // dataArray, centroidDecimal, 
+		$sse     =getSSE($dt,$selCent); 	// dataArray, centroidDecimal, 
 		
 		// 4.2 MSE
 		$mse     =getMSE($sse);
@@ -122,23 +123,34 @@ if (!isset($_POST['mode'])) { // invalid request
 		$fitness =getFitness($mse);
 
 		// 6. GA 
-		// 6.1 population
-		
-			// selection
-			// crossover
-			// mutation
+			// 6.1 create population
+			$individuArr =getNewPopulation($popNum,$clustNum,$attrNum,$attrRange);
+			// pr($individuArr);
+			// 6.2 selection : tournament 
+			$tournamentSize=5;
+			for ($i=0; $i <$tournamentSize ; $i++) { 
+				$individuDec=getRandCent($clustNum,$attrNum,$attrRange);
+			}
+			// 6.3 crossover
+			$maxBit    =7;
+			$ind1      =$centBin;
+			$ind2      =$individuArr[0];
+			$crossover =getCrossOver($maxBit,$ind1,$ind2);
+			
+			// 6.4 mutation
 
 		$out['success']=true;
 		$out['data']=array(
-			'cent'    =>$cent,
-			'centDec' =>$centDec,
-			'centBin' =>$centBin,
-			'data'    =>$dt,
-			'dist'    =>$dist,
-			'distMin' =>$distMin,
-			'sse'     =>$sse,
-			'mse'     =>$mse,
-			'fitness' =>$fitness,
+			'cent'        =>$cent,
+			'centDec'     =>$centDec,
+			'centBin'     =>$centBin,
+			'data'        =>$dt,
+			'dist'        =>$dist,
+			'distMin'     =>$distMin,
+			'sse'         =>$sse,
+			'mse'         =>$mse,
+			'fitness'     =>$fitness,
+			'individuArr' =>$individuArr,
 		);
 	}echo json_encode($out);
 }

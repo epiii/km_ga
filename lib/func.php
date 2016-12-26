@@ -135,19 +135,20 @@ function getRandCent($clustNum,$attrNum,$attrRange){
 function getCentDec($centArr){
 	$retArr=array();
 	foreach ($centArr as $i => $v)
-		foreach ($v as $ii => $vv) 
-			$retArr[$i][$ii]=$vv/10;
+		foreach ($v as $ii => $vv) $retArr[$i][$ii]=$vv/10;
+	
 	return $retArr;
 }
 
 function getCentBin($centArr){
 	$retArr=array();
-	foreach ($centArr as $i => $v)
-		foreach ($v as $ii => $vv) 
-			$retArr[$i][$ii]=decbin($vv);
-	return $retArr;
+	foreach ($centArr as $i => $v){ //centroid row 3
+		foreach ($v as $ii => $vv) { // centroid col 4
+			$decb= sprintf('%07d', decbin($vv));
+			$retArr[$i][$ii]=$decb;
+		}
+	}return $retArr;
 }
-
 
 function getMSE2($data,$attrNum,$centroid){
 	$distArr=array();
@@ -166,12 +167,9 @@ function getMSE2($data,$attrNum,$centroid){
 }
 
 $sseArr=array();
-// function getSSE($dtArr,$distMinArr,$centDecArr){ // output : 150 rows
 function getSSE($dtArr,$selCent){ // output : 150 rows
 	foreach ($dtArr as $i => $v) { // data : row (1-150)
 		foreach ($v as $ii => $vv) { // data : col (1-4) : sl, sw, pl, pw
-			// pr($selCent);
-			// foreach ($distMinArr as $k => $val) {// centroid : row (1-3) 
 			foreach ($selCent as $k => $val) {// centroid : row (1-3) 
 				$distx=0;
 				foreach ($val as $kk => $vval) { // centroid : col (1-4) 
@@ -182,10 +180,8 @@ function getSSE($dtArr,$selCent){ // output : 150 rows
 	}return $sseArr;
 }
 
-
 function getSelectedCent($distMin, $centDec){
 	$centArr=array();
-	// pr($distMin);
 	foreach ($distMin as $i => $v) {
 		foreach ($centDec as $ii => $vv) {
 			if($ii==$v['index'])
@@ -204,3 +200,39 @@ function getMSE($sse){
 function getFitness($mse){
 	return dec(1/$mse);
 }
+
+function getCrossOver($maxBit,$ind1,$ind2){
+	foreach ($ind1 as $i => $v) { // ind1 : row
+		$cut = rand(1,($maxBit-1));
+		foreach ($v as $ii => $vv) { // ind1 : col
+			// IND 1
+			$str1 = substr($vv, 0,$cut);  // returns "abcde"
+			$str2 = substr($vv, $cut);  // returns "abcde"
+			// IND 2
+			$str11 = substr($ind2[$i][$ii], 0,$cut);  // returns "abcde"
+			$str22 = substr($ind2[$i][$ii], $cut);  // returns "abcde"
+			// new IND 3
+			$newStr1= $str1.$str22;
+			$newStr2= $str11.$str2;
+			// save 
+			$newInd[$i][$ii]=$newStr1;
+		}
+	}
+	pr($ret);
+	return $ret;
+}
+
+function getCutString($string,$cut){
+	$str1 = substr($string, 0,$cut); 
+	$str2 = substr($string, $cut);  
+	return array($str1,$str2);
+}
+
+function getNewPopulation($popNum,$clustNum,$attrNum,$attrRange){
+	$individuArr=array();
+	for ($i=0;$i<$popNum; $i++) { // 10 individu
+		$individuDec     =getRandCent($clustNum,$attrNum,$attrRange);
+		$individuBin     =getCentBin($individuDec);
+		$individuArr[$i] =$individuBin;
+	} return $individuArr;
+} 
