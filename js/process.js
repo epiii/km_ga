@@ -104,38 +104,38 @@ function runGA() {
         // parent 1 & 2  ------------
         tb+='<h3 class="text-left">- Parent 1 :</h3>';
         $.each(dt.data.parent1, function (id,item) {
-          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<h3 class="text-left">- Parent 2:</h3>';
         $.each(dt.data.parent2, function (id,item) {
-          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<hr />';
 
         // hasil crossover (Par1 x Par2) ---------        
-        tb+='<h3 class="text-left">- Hasil crossover (biner) :</h3>';
+        tb+='<h3 class="text-center">- Hasil crossover (biner) :</h3>';
         tb+='<h3 class="text-left">- child 1  :</h3>';
         $.each(dt.data.binChild1, function (id,item) {
-          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<h3 class="text-left">- child 2  :</h3>';
         $.each(dt.data.binChild2, function (id,item) {
-          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<hr />';
 
         // hasil crossover decimal
-        tb+='<h3 class="text-left">- Hasil crossover (decimal) :</h3>';
+        tb+='<h3 class="text-center">- Hasil crossover (decimal) :</h3>';
         tb+='<h3 class="text-left">- child 1 :</h3>';
         $.each(dt.data.decChild1, function (id,item) {
-          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<h3 class="text-left">- child 2 :</h3>';
         $.each(dt.data.decChild2, function (id,item) {
-          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<hr />';
-        
+
         // -------
 
         $('#kmgaDV').html(tb);
