@@ -89,15 +89,8 @@ if (!isset($_POST['mode'])) { // invalid request
 				$nox++;
 			}
 		}$tb.='</table></div>';
-
-		// foreach ($clusters as $i => $cluster)
-		// printf("Cluster %s [%d,%d]: %d points\n", $i, $cluster[0], $cluster[1], count($cluster));
-		$cent =getInitCentroid($clustNum,$attrNum,$attrRange);
-		
 		$out['success']=true;
 		$out['data']=$tb;
-		$out['mse']=getMSE($dt,$attrNum,$cent);
-		// pr($out['mse']);
 	}else{ // ga
 		$no=0;
 		$popNum=50;
@@ -105,21 +98,41 @@ if (!isset($_POST['mode'])) { // invalid request
 		$popArr=array();
 		$centArr=array();
 		// ---
-
-		// pr($cent);
-		// for($i=0;$i<$clustNum;$i++){ //cluster
-		// 	for($j=0;$j<$attrNum;$j++){ // atribut
-		// 		$popArr[$i][$j]=rand($attrRange[$i][0],$attrRange[$i][1])/10;
-		// 	}
-		// }
 		
-		// getRandomPopulation
-		$cent =getInitCentroid($clustNum,$attrNum,$attrRange); // random centroid (4,2,6,1)
-		$dt   =getDataArr($dataSrc);	// data 1-150 
-		$dist =getDistance($dt,$cent);	// distance data and centroid
-		$mse  =getMSE($dt,$attrNum,$cent); // means square error
-		// pr($mse);
+		// 1. random centroid 
+		$cent    =getRandCent($clustNum,$attrNum,$attrRange); // decimal (40,50,32,12)
+		$centDec =getCentDec($cent);	// decimal (4.0, 5.0, 3.2, 1.2)
+		$centBin =getCentBin($cent);	// binary ("1001001","110010","1001001","1001001")
+
+		// 2. calculate distance 
+		$dt      =getDataArr($dataSrc);		// dataset (array) : 150 rows 
+		$dist    =getDistance($dt,$centDec);// distance : data <-> centroid
+		
+		// 3. assign data to cluster
+		$distMin =getMinDistance($dist); 	// selected cluster : 150 rows : (index,value)
+
+		// 4.1 SSE
+		$sse = getSSE($dt,$centDec);
+
+		// 4.2 MSE
+		// $mse = getMSE();
+
+		// 5. fitness
+
+		// 6. operator GA 
+			// selection
+			// crossover
+			// mutation
+
 		$out['success']=true;
-	}
-	echo json_encode($out);
+		$out['data']=array(
+			'cent'    =>$cent,
+			'centDec' =>$centDec,
+			'centBin' =>$centBin,
+			'data'    =>$dt,
+			'dist'    =>$dist,
+			'distMin' =>$distMin,
+			'sse'     =>$sse
+		);
+	}echo json_encode($out);
 }

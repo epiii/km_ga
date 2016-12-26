@@ -92,31 +92,64 @@ function tableNumRow($path){
     }return $numRow; 
 }
 
-function getDistance($data,$centroid){
-	$distArr=array();
-	foreach ($data as $i => $v) { // data > @record || 150
-		$distx=0;
-		foreach ($v as $ii => $vv) { // data > record > column || 4
-			foreach ($centroid as $k => $val) { // centroid > @cluster || 3
-				foreach ($val as $kk => $vval) { // centroid > @cluster || 3
-					$distx+=pow(($vv-$vval),2);
-				}
+$distArr=array();
+function getDistance($dtArr,$centArr){
+	foreach ($dtArr as $i => $v) { // data : row (1-150)
+		foreach ($v as $ii => $vv) { // data : col (1-4) : sl, sw, pl, pw
+			foreach ($centArr as $k => $val) {// centroid : row (1-3) 
+				$distx=0;
+				foreach ($val as $kk => $vval) { // centroid : col (1-4) 
+					$distx+=pow(($vv-$vval),2); 
+				}$distx=dec(sqrt($distx));
+				$distArr[$i][$k]=$distx;
 			}
-		}$distx=sqrt($distx);
-		$distArr[]=$distx;
+		}
 	}return $distArr;
 }
 
-function getInitCentroid($clustNum,$attrNum,$attrRange){
-	$popArr=array();
-	for($i=0;$i<$clustNum;$i++){ //cluster
-		for($j=0;$j<$attrNum;$j++){ // atribut
-			$popArr[$i][$j]=rand($attrRange[$i][0],$attrRange[$i][1])/10;
-		}
-	}return $popArr;
+function getMinDistance($dtArr) {
+	$minArr=array();
+	$minD=0;
+	foreach ($dtArr as $i => $v) {
+		$minArr[$i]['index']=array_keys($v,min($v));
+		$minArr[$i]['value']=min($v);
+	}return $minArr;
 }
 
-function getMSE($data,$attrNum,$centroid){
+// function getMinCluster($dtArr) {
+// 	$min=array();
+// 	foreach ($dtArr as $i => $v) {
+// 		$min[]=min($v);
+// 	}return $min;
+// }
+
+function getRandCent($clustNum,$attrNum,$attrRange){
+	$retArr=array();
+	for($i=0;$i<$clustNum;$i++){ //cluster
+		for($j=0;$j<$attrNum;$j++){ // atribut
+			$retArr[$i][$j]=rand($attrRange[$j][0],$attrRange[$j][1]); // misal : 46 --> 4.6
+		}
+	}return $retArr;
+}
+
+function getCentDec($centArr){
+	$retArr=array();
+	foreach ($centArr as $i => $v)
+		foreach ($v as $ii => $vv) 
+			$retArr[$i][$ii]=$vv/10;
+	return $retArr;
+}
+
+function getCentBin($centArr){
+	$retArr=array();
+	foreach ($centArr as $i => $v)
+		foreach ($v as $ii => $vv) 
+			$retArr[$i][$ii]=decbin($vv);
+	return $retArr;
+}
+
+
+function getMSE2($data,$attrNum,$centroid){
 	$distArr=array();
 	foreach ($data as $i => $v) { // data > @record || 150
 		$distx=0;
@@ -130,4 +163,18 @@ function getMSE($data,$attrNum,$centroid){
 		// $distx=sqrt($distx);
 		$distArr[]=$distx/$attrNum;
 	}return $distArr;
+}
+
+$sseArr=array();
+function getSSE($dtArr,$centArr){
+	foreach ($dtArr as $i => $v) { // data : row (1-150)
+		foreach ($v as $ii => $vv) { // data : col (1-4) : sl, sw, pl, pw
+			foreach ($centArr as $k => $val) {// centroid : row (1-3) 
+				$distx=0;
+				foreach ($val as $kk => $vval) { // centroid : col (1-4) 
+					$distx+=pow(($vv-$vval),2); 
+				}
+			}
+		}$sseArr[$i]=$distx;
+	}return $sseArr;
 }
