@@ -98,8 +98,9 @@ function runGA() {
 
         // MSE - Fitness  ------------
         tb+='<h3 class="text-left">- MSE : '+dt.data.mse+'</h3>'
-        +'<h3 class="text-left">- Fitness : '+dt.data.fitness+'</h3>';
-        
+        +'<h3 class="text-left">- Fitness : '+dt.data.fitness+'</h3>'
+        +'<hr />';
+
         // parent 1 & 2  ------------
         tb+='<h3 class="text-left">- Parent 1 :</h3>';
         $.each(dt.data.parent1, function (id,item) {
@@ -109,6 +110,7 @@ function runGA() {
         $.each(dt.data.parent2, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
+        tb+='<hr />';
 
         // hasil crossover (Par1 x Par2) ---------        
         tb+='<h3 class="text-left">- Hasil crossover (biner) :</h3>';
@@ -120,6 +122,7 @@ function runGA() {
         $.each(dt.data.binChild2, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
+        tb+='<hr />';
 
         // hasil crossover decimal
         tb+='<h3 class="text-left">- Hasil crossover (decimal) :</h3>';
@@ -131,6 +134,8 @@ function runGA() {
         $.each(dt.data.decChild2, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
+        tb+='<hr />';
+        
         // -------
 
         $('#kmgaDV').html(tb);
