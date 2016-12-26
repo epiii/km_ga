@@ -102,17 +102,21 @@ function runGA() {
         
         // parent 1 & 2  ------------
         tb+='<h3 class="text-left">- Parent 1 :</h3>';
-        $.each(dt.data.individu1, function (id,item) {
+        $.each(dt.data.parent1, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
         tb+='<h3 class="text-left">- Parent 2:</h3>';
-        $.each(dt.data.individu2, function (id,item) {
+        $.each(dt.data.parent2, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
 
-        // hasil crossover (Par1 & Par2) ---------        
-        tb+='<h3 class="text-left">- New Individu (crossover) :</h3>';
-        $.each(dt.data.newIndividu, function (id,item) {
+        // hasil crossover (Par1 x Par2) ---------        
+        tb+='<h3 class="text-left">- child 1 (crossover) :</h3>';
+        $.each(dt.data.child1, function (id,item) {
+          tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
+        });
+        tb+='<h3 class="text-left">- child 2 (crossover) :</h3>';
+        $.each(dt.data.child2, function (id,item) {
           tb+='<h3 class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</h3>';
         });
         // -------

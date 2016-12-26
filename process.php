@@ -133,30 +133,35 @@ if (!isset($_POST['mode'])) { // invalid request
 			}
 */
 			// 6.3 crossover
-			$maxBit      =7;
-			$individu1   =$centBin;
-			$individu2   =$individuArr[0];
-			$newIndividu =getCrossOver($maxBit,$individu1,$individu2);
-			pr($newIndividu);
+			$maxBit  =7;
+			$parent1 =$centBin;
+			$parent2 =$individuArr[0];
+			
+			$newIndividu =getCrossOver($maxBit,$parent1,$parent2);
+			$child1 = $newIndividu[0];
+			$child2 = $newIndividu[1];
+			// pr($newIndividu);
 			// 6.4 mutation
 
 		$out['success']=true;
 		$out['data']=array(
 			// k-means
-			'cent'        =>$cent,
-			'centDec'     =>$centDec,
-			'centBin'     =>$centBin,
-			'data'        =>$dt,
-			'dist'        =>$dist,
-			'distMin'     =>$distMin,
+			'cent'    =>$cent,
+			'centDec' =>$centDec,
+			'centBin' =>$centBin,
+			'data'    =>$dt,
+			'dist'    =>$dist,
+			'distMin' =>$distMin,
 			// Fitness
-			'sse'         =>$sse,
-			'mse'         =>$mse,
-			'fitness'     =>$fitness,
-			// xOver
-			'individu1'   =>$individu1,
-			'individu2'   =>$individu2,
-			'newIndividu' =>$newIndividu,
+			'sse'     =>$sse,
+			'mse'     =>$mse,
+			'fitness' =>$fitness,
+			// xOver : parent
+			'parent1' =>$parent1,
+			'parent2' =>$parent2,
+			// xOver : child
+			'child1'  =>$child1,
+			'child2'  =>$child2,
 		);
 	}echo json_encode($out);
 }

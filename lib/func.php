@@ -202,7 +202,8 @@ function getFitness($mse){
 }
 
 function getCrossOver($maxBit,$ind1,$ind2){
-	$newInd = array();
+	$newInd1 = array();
+	$newInd2 = array();
 	foreach ($ind1 as $i => $v) { // ind1 : row : 3 
 		$cut = rand(1,($maxBit-1));
 		foreach ($v as $ii => $vv) { // ind1 : col : 4 string 
@@ -211,19 +212,20 @@ function getCrossOver($maxBit,$ind1,$ind2){
 			$str1 = substr($vv, 0,$cut);  	// returns "1011___"
 			$str2 = substr($vv, $cut);  	// returns "____001"
 			// parent 2
-			$str11 = substr($ind2[$i][$ii], 0,$cut);  // returns "abcde"
-			$str22 = substr($ind2[$i][$ii], $cut);  // returns "abcde"
-			
+														// src     "1000|110" 
+			$str11 = substr($ind2[$i][$ii], 0,$cut);  	// returns "1000___"
+			$str22 = substr($ind2[$i][$ii], $cut);		// returns "____110"  	
+
 			// new individu 1
 			$newStr1= $str1.$str22;
 			// new individu 2
 			$newStr2= $str11.$str2;
 			
 			// save 2 individu 
-			$newInd[][$i][$ii]=$newStr1;
-			$newInd[][$i][$ii]=$newStr2;
+			$newInd1[$i][$ii]=$newStr1;
+			$newInd2[$i][$ii]=$newStr2;
 		}
-	}return $newInd;
+	}return array($newInd1,$newInd2);
 }
 
 function getCutString($string,$cut){
