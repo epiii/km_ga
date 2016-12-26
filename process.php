@@ -103,25 +103,27 @@ if (!isset($_POST['mode'])) { // invalid request
 		$cent    =getRandCent($clustNum,$attrNum,$attrRange); // decimal (40,50,32,12)
 		$centDec =getCentDec($cent);	// decimal (4.0, 5.0, 3.2, 1.2)
 		$centBin =getCentBin($cent);	// binary ("1001001","110010","1001001","1001001")
-
+		
 		// 2. calculate distance 
 		$dt      =getDataArr($dataSrc);		// dataset (array) : 150 rows 
 		$dist    =getDistance($dt,$centDec);// distance : data <-> centroid
 		
 		// 3. assign data to cluster
 		$distMin =getMinDistance($dist); 	// selected cluster : 150 rows : (index,value)
-
+		
 		// 4.1 SSE
 		$selCent =getSelectedCent($distMin, $centDec);
 		$sse     =getSSE($dt,$selCent); // dataArray, centroidDecimal, 
-
+		
 		// 4.2 MSE
-		$mse 	=getMSE($sse);
-
+		$mse     =getMSE($sse);
+		
 		// 5. fitness
-		$fitness=getFitness($mse);
+		$fitness =getFitness($mse);
 
-		// 6. operator GA 
+		// 6. GA 
+		// 6.1 population
+		
 			// selection
 			// crossover
 			// mutation
