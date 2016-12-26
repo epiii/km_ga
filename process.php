@@ -125,31 +125,35 @@ if (!isset($_POST['mode'])) { // invalid request
 		// 6. GA 
 			// 6.1 create population
 			$individuArr =getNewPopulation($popNum,$clustNum,$attrNum,$attrRange);
-			// pr($individuArr);
+
 			// 6.2 selection : tournament 
-			$tournamentSize=5;
+/*			$tournamentSize=5;
 			for ($i=0; $i <$tournamentSize ; $i++) { 
 				$individuDec=getRandCent($clustNum,$attrNum,$attrRange);
 			}
+*/
 			// 6.3 crossover
 			$maxBit      =7;
 			$ind1        =$centBin;
 			$ind2        =$individuArr[0];
 			$newIndividu =getCrossOver($maxBit,$ind1,$ind2);
-			// pr($crossover);
+			
 			// 6.4 mutation
 
 		$out['success']=true;
 		$out['data']=array(
+			// k-means
 			'cent'        =>$cent,
 			'centDec'     =>$centDec,
 			'centBin'     =>$centBin,
 			'data'        =>$dt,
 			'dist'        =>$dist,
 			'distMin'     =>$distMin,
+			// Fitness
 			'sse'         =>$sse,
 			'mse'         =>$mse,
 			'fitness'     =>$fitness,
+			// xOver
 			'individuArr' =>$individuArr,
 			'newIndividu' =>$newIndividu,
 		);
