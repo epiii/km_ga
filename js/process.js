@@ -5,7 +5,8 @@ function runGA() {
     dataType:'json',
     type:'post',
     success:function(dt){
-      $('#kmgaDV').html('loading ....');
+      $('#kmgaDV').html('<img src="js/loader.gif" alt="" />');
+      // $('#kmgaDV').html('loading ....');
       setTimeout(function(){
         // centroid ----------------
         var tb='';
@@ -148,7 +149,7 @@ function runGA() {
           tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<hr />';
-
+        tb+='<p>Generasi :'+dt.data.generasi+'</p>';
         // -------
 
         $('#kmgaDV').html(tb);

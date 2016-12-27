@@ -69,9 +69,10 @@ if (!isset($_POST['mode'])) { // invalid request
 			$tb.='<table class="table bordered">';
 				$tb.='<tr style="background-color:black; color:white;">';
 					$tb.='<th class="text-center">no.</th>';
-					$tb.='<th class="text-center">Centroid Attibute /<br> Data Attribute</th>';
+					$tb.='<th class="text-center">Data </th>';
+					// $tb.='<th class="text-center">Centroid Attibute /<br> Data Attribute</th>';
 					$tb.='<th class="text-center">Prediction Cluster /<br> Real Cluster</th>';
-					$tb.='<th class="text-center">MSE</th>';
+					// $tb.='<th class="text-center">MSE</th>';
 				$tb.='</tr>';
 		$nox=1;
 
@@ -81,9 +82,10 @@ if (!isset($_POST['mode'])) { // invalid request
 			foreach ($v as $ii => $vv) {
 				$tb.='<tr class="'.$clr.'">';
 					$tb.='<td class="text-center">'.$nox.'</td>';
-					$tb.='<td class="text-center"> 
-							'.dec($v[0]).','.dec($v[1]).','.dec($v[2]).','.dec($v[2]).'/<br> 
-						</td>';
+					$tb.='<td class="text-center">Data -'.$nox.'</td>';
+					// $tb.='<td class="text-center"> 
+					// 		'.dec($v[0]).','.dec($v[1]).','.dec($v[2]).','.dec($v[2]).'/<br> 
+					// 	</td>';
 					$tb.='<td class="text-center">'.($i+1).'</td>';
 				$tb.='</tr>';
 				$nox++;
@@ -94,12 +96,16 @@ if (!isset($_POST['mode'])) { // invalid request
 	}else{ // ga
 		$no=0;
 		$popNum=10;
-		$maxFitness=0.1;
+		// $maxFitness=0.1;
+		// $minFitness=0.7;
+		$minFitness=0.03;
 		// ---
 		$popArr=array();
 		$centArr=array();
 		// ---
-		
+
+		// iteration 1 (k-means + GA[selection + crossOver])
+		// if()
 		// 1. random centroid 
 		$cent    =getRandCent($clustNum,$attrNum,$attrRange); // decimal (40,50,32,12)
 		$centDec =getCentDec($cent);	// decimal (4.0, 5.0, 3.2, 1.2)
@@ -123,7 +129,7 @@ if (!isset($_POST['mode'])) { // invalid request
 		$fitness =getFitness($mse);
 
 		// 6. GA 
-			// 6.1 create population
+			// 6.1 create population 
 			$individuArr =getNewPopulation($popNum,$clustNum,$attrNum,$attrRange);
 
 			// 6.2 selection : tournament 
@@ -152,7 +158,38 @@ if (!isset($_POST['mode'])) { // invalid request
 				$decChild2	= getBin2Dec($binChild2);
 			// pr($decChild1);
 			// 6.4 mutation
+		$loop=true;
 
+		// iteration 2 (k-means + GA[selection + crossOver])
+		$iteration=1;
+		$fitArr=array();
+		while($loop){
+			// 1. get new centroid from 1st.Iteration (GA) 
+				
+			// 2. calculate distance 
+			$dt      =getDataArr($dataSrc);		// dataset (array) : 150 rows 
+			$dist    =getDistance($dt,$centDec);// distance : data <-> centroid
+			
+			// 3. assign data to cluster
+			$distMin =getMinDistance($dist); 	// selected cluster : 150 rows : (index,value)
+			
+			// 4.1 SSE
+			$selCent =getSelectedCent($distMin, $centDec);
+			$sse     =getSSE($dt,$selCent); 	// dataArray, centroidDecimal, 
+			
+			// 4.2 MSE
+			$mse     =getMSE($sse);
+			
+			// 5. fitness
+			$fitness =getFitness($mse);
+			$fitArr[]=$fitness;
+			if($fitness>=$minFitness) $loop=false; // selesai 
+			// if($fitness>=$minFitness) $loop=false; // selesai 
+			break;
+			$iteration++;
+		}
+		// echo $fitArr.' - '.$Iteration;
+		// exit();
 		$out['success']=true;
 		$out['data']=array(
 			// k-means
@@ -180,6 +217,9 @@ if (!isset($_POST['mode'])) { // invalid request
 				// dec
 				'decChild1'  =>$decChild1,
 				'decChild2'  =>$decChild2,
+				// generasi 
+				'generasi'  =>$iteration,
+
 		);
 	}echo json_encode($out);
 }

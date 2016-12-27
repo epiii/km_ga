@@ -199,6 +199,7 @@ function getMSE($sse){
 
 function getFitness($mse){
 	return dec(1/$mse);
+	// return dec(1/$mse)*10;
 }
 
 function getCrossOver($maxBit,$ind1,$ind2){
