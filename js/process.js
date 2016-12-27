@@ -102,12 +102,25 @@ function runGA() {
         +'<hr />';
 
         // parent 1 & 2  ------------
+        tb+='<h3 class="text-center">- Biner :</h3>';
         tb+='<h3 class="text-left">- Parent 1 :</h3>';
-        $.each(dt.data.parent1, function (id,item) {
+        $.each(dt.data.binParent1, function (id,item) {
           tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<h3 class="text-left">- Parent 2:</h3>';
-        $.each(dt.data.parent2, function (id,item) {
+        $.each(dt.data.binParent2, function (id,item) {
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
+        });
+        tb+='<hr />';
+        
+        //dec parent 1 & 2  ------------
+        tb+='<h3 class="text-center">- Decimal :</h3>';
+        tb+='<h3 class="text-left">- Parent 1  :</h3>';
+        $.each(dt.data.decParent1, function (id,item) {
+          tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
+        });
+        tb+='<h3 class="text-left">- Parent 2:</h3>';
+        $.each(dt.data.decParent2, function (id,item) {
           tb+='<p class="text-left">- - Cluster '+(parseInt(id)+1)+' : '+item+'</p>';
         });
         tb+='<hr />';

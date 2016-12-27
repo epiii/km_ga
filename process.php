@@ -135,18 +135,21 @@ if (!isset($_POST['mode'])) { // invalid request
 			// 6.3 crossover
 			$maxBit  =5; 	// 1100111 	=> 7 bit
 							// 0123456  => 6 index	
-							// 012345|6 => 5th is MAXimum (cut-point index) 
-			$parent1 =$centBin;
-			$parent2 =$individuArr[0];
+							// 012345|6 => 5th index (MAX of Random cut_point ) 
+			// bin
+				$binParent1 =$centBin;
+				$binParent2 =$individuArr[0];
+			// dec
+				$decParent1 =getBin2Dec($centBin);
+				$decParent2 =getBin2Dec($individuArr[0]);
 			// process xOver
-			$newIndividu =getCrossOver($maxBit,$parent1,$parent2);
+			$newIndividu =getCrossOver($maxBit,$binParent1,$binParent2);
 				// hasil binary mode
 				$binChild1 = $newIndividu[0];
 				$binChild2 = $newIndividu[1];
 				// hasil decimal mode
 				$decChild1	= getBin2Dec($binChild1);
 				$decChild2	= getBin2Dec($binChild2);
-
 			// pr($decChild1);
 			// 6.4 mutation
 
@@ -164,13 +167,19 @@ if (!isset($_POST['mode'])) { // invalid request
 			'mse'     =>$mse,
 			'fitness' =>$fitness,
 			// xOver : parent
-			'parent1' =>$parent1,
-			'parent2' =>$parent2,
+				// bin
+				'binParent1' =>$binParent1,
+				'binParent2' =>$binParent2,
+				// dec
+				'decParent1' =>$decParent1,
+				'decParent2' =>$decParent2,
 			// xOver : child
-			'binChild1'  =>$binChild1,
-			'binChild2'  =>$binChild2,
-			'decChild1'  =>$decChild1,
-			'decChild2'  =>$decChild2,
+				// bin
+				'binChild1'  =>$binChild1,
+				'binChild2'  =>$binChild2,
+				// dec
+				'decChild1'  =>$decChild1,
+				'decChild2'  =>$decChild2,
 		);
 	}echo json_encode($out);
 }

@@ -206,6 +206,7 @@ function getCrossOver($maxBit,$ind1,$ind2){
 	$newInd2 = array();
 	foreach ($ind1 as $i => $v) { // ind1 : row : 3 
 		$cut = rand(1,($maxBit));
+		// pr($cut);
 		foreach ($v as $ii => $vv) { // ind1 : col : 4 string 
 			// parent 1
 											// src     "1011|001" 
@@ -225,6 +226,8 @@ function getCrossOver($maxBit,$ind1,$ind2){
 
 			$newInd1[$i][$ii]=$newStr1;	// c1: "1011|110" 
 			$newInd2[$i][$ii]=$newStr2; // c2: "1000|001"
+			// echo $cut.' p1: '.$vv.' p2:'.$ind2[$i][$ii].' c1:'.$newStr1.' c2: '.$newStr2;
+			// exit();
 		}
 	}return array($newInd1,$newInd2);
 }
