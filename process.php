@@ -28,7 +28,8 @@ if (!isset($_POST['mode'])) { // invalid request
 	$out['data']=null;
 }else{ // valid request 
 	if($_POST['mode']=='kmeans'){ // k-means process
-		$points = getDataArr($dataSrc);
+		$points = getDataArr2($dataSrc);
+		// pr($points);
 		$space  = new KMeans\Space($attrNum);
 
 		// add points to space
@@ -46,7 +47,7 @@ if (!isset($_POST['mode'])) { // invalid request
 		$tb.='<table class="table bordered table-striped">';
 			$tb.='<tr style="background-color:black; color:white;">';
 				$tb.='<th class="text-center">cluster</th>';
-				$tb.='<th class="text-center">centroid of ('.implode(',', getDataHeader($dataSrc)).')</th>';
+				$tb.='<th class="text-center">centroid of ('.implode(',', getDataHeader2($dataSrc)).')</th>';
 				$tb.='<th class="text-center">total member</th>';
 			$tb.='</tr>';
 		$nox=1;
@@ -76,7 +77,7 @@ if (!isset($_POST['mode'])) { // invalid request
 				$tb.='</tr>';
 		$nox=1;
 
-		$dt =getDataArr($dataSrc);
+		$dt =getDataArr2($dataSrc);
 		foreach ($clusters as $i => $v) { // 
 			$clr=$i==0?'warning':($i%2==0?'info':'success');
 			foreach ($v as $ii => $vv) {
@@ -112,7 +113,7 @@ if (!isset($_POST['mode'])) { // invalid request
 		$centBin =getCentBin($cent);	// binary ("1001001","110010","1001001","1001001")
 		
 		// 2. calculate distance 
-		$dt      =getDataArr($dataSrc);		// dataset (array) : 150 rows 
+		$dt      =getDataArr2($dataSrc);		// dataset (array) : 150 rows 
 		$dist    =getDistance($dt,$centDec);// distance : data <-> centroid
 		
 		// 3. assign data to cluster
@@ -167,7 +168,7 @@ if (!isset($_POST['mode'])) { // invalid request
 			// 1. get new centroid from 1st.Iteration (GA) 
 				
 			// 2. calculate distance 
-			$dt      =getDataArr($dataSrc);		// dataset (array) : 150 rows 
+			$dt      =getDataArr2($dataSrc);		// dataset (array) : 150 rows 
 			$dist    =getDistance($dt,$centDec);// distance : data <-> centroid
 			
 			// 3. assign data to cluster

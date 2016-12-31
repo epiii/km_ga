@@ -1,13 +1,16 @@
 function runGA() {
+  $('#kmgaDV').html('<img src="js/loader.gif" alt="" />');
   $.ajax({  
     url:'process.php',
     data:'mode=ga',
     dataType:'json',
     type:'post',
+    error:function(){
+      $('#kmgaDV').html('error');
+    },
     success:function(dt){
-      $('#kmgaDV').html('<img src="js/loader.gif" alt="" />');
       // $('#kmgaDV').html('loading ....');
-      setTimeout(function(){
+      // setTimeout(function(){
         // centroid ----------------
         var tb='';
         tb+='<table class="table table-bordered">'
@@ -153,7 +156,7 @@ function runGA() {
         // -------
 
         $('#kmgaDV').html(tb);
-      },300);
+      // },300);
     },
   });
 }

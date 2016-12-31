@@ -11,20 +11,30 @@ function pr($par){
 	exit();
 }
 
+
 function tableView($path){
+	$colorArr=['info','warning','success','danger'];
 	$tb='<table class="table table-bordered table-hovered">';
 	// header
 	$tb.= '<thead><tr style="background-color:black;color:white;" ><th class="text-right">No.</th>';
 	foreach (getDataHeader($path) as $i => $v) {
 		$tb.='<th class="text-center">'.$v.'</th>';
 	}$tb.='</tr></thead>';
+	
 	// body
 	$tb.='<tbody>';
 	$nox=1;
+	$cls1=$cls2='';
+	$index=0;
 	foreach (getDataArr($path) as $i => $v) {
-		$tb.='<tr class="text-center">';
+		if($cls1!=$cls2) {
+			$index++;
+			$cls2=$cls1;
+		}
+		$tb.='<tr class="'.$colorArr[$index].' text-center">';
 		$tb.='<td class="text-right">'.$nox.'.</td>';
 		foreach ($v as $ii => $vv) {
+			if(!is_numeric($vv)) $cls1=$vv;
 			$tb.='<td>'.$vv.'</td>';
 		}$tb.='</tr>';
 		$nox++;
@@ -44,6 +54,18 @@ function getDataHeader($path){
 	if (($handle = fopen($path, "r")) !== FALSE) {
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 		    $colNum = count($data);
+		    foreach ($data as $key => $value) 
+	    		$dataArr[$key]=$value;
+		    break;
+		}fclose($handle);
+	}return $dataArr;
+}
+function getDataHeader2($path){
+	$row = 0;
+	$dataArr=array();
+	if (($handle = fopen($path, "r")) !== FALSE) {
+		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+		    $colNum = count($data);
 		    for ($i=0; $i<$colNum-1; $i++) {
 		    	if(!is_numeric($data[$i])) {
 		    		$dataArr[$i]=$data[$i];
@@ -54,6 +76,20 @@ function getDataHeader($path){
 }
 
 function getDataArr($path){
+	$dataArr=array();
+	if (($handle = fopen($path, "r")) !== FALSE) {
+		$row = 0;
+		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+		    $colNum = count($data);
+		     if(is_numeric($data[0]))
+			    for ($i=0; $i<$colNum; $i++)
+		    		$dataArr[$row][$i]=$data[$i];
+		    $row++;
+		}fclose($handle);
+	}return $dataArr;
+}
+
+function getDataArr2($path){
 	$row = 0;
 	$dataArr=array();
 	if (($handle = fopen($path, "r")) !== FALSE) {
@@ -68,20 +104,20 @@ function getDataArr($path){
 	}return $dataArr;
 }
 
-function getDataArr2($path){
-	$row = 0;
-	$dataArr=array();
-	if (($handle = fopen($path, "r")) !== FALSE) {
-		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-		    $colNum = count($data);
-		    for ($i=0; $i<$colNum-3; $i++) {
-		    	if(is_numeric($data[$i])) {
-		    		$dataArr[$row][$i]=$data[$i];
-		    	}
-		    }$row++;
-		}fclose($handle);
-	}return $dataArr;
-}
+// function getDataArr2($path){
+// 	$row = 0;
+// 	$dataArr=array();
+// 	if (($handle = fopen($path, "r")) !== FALSE) {
+// 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+// 		    $colNum = count($data);
+// 		    for ($i=0; $i<$colNum-3; $i++) {
+// 		    	if(is_numeric($data[$i])) {
+// 		    		$dataArr[$row][$i]=$data[$i];
+// 		    	}
+// 		    }$row++;
+// 		}fclose($handle);
+// 	}return $dataArr;
+// }
 
 function tableNumRow($path){
 	$numRow;
